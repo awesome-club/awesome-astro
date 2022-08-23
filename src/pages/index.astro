@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import StartButton from "../components/StartButton";
+---
+
+<Layout title="Welcome to Astro.">
+  <section class="hi">
+    <img src="/coding.svg" />
+    <p>Create your Dev Bio in seconds.</p>
+
+    <StartButton client:only="solid" />
+  </section>
+</Layout>
+
+<style lang="scss">
+  .hi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-size: 18px;
+    }
+
+    img {
+      width: 300px;
+      margin: 25px 0;
+    }
+  }
+</style>

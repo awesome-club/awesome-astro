@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ManageProfile from "../components/ManageProfile";
+---
+
+<Layout title="Your Profile">
+  <section class="profile">
+    <ManageProfile client:only="solid" />
+  </section>
+</Layout>
+
+<style is:global lang="scss">
+  #description {
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow);
+    padding: var(--margin-md);
+    height: 250px;
+    overflow: auto;
+  }
+</style>

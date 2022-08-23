@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getProfileByLink } from "../../services/ProfileService";
+import { getPublicUrl } from "../../services/FileService";
+import toHtml from "editorjs-html";
+
+const parser = toHtml();
+const { link } = Astro.params;
+
+const { error, data } = await getProfileByLink(link as string);
+
+const found = !error && data && data.length === 1;
+
+const profile = found ? data[0] : {};
+const name = profile.name;
+const description = found && JSON.parse(profile.description);
+const html = parser.parse(description);
+
+let preview = "";
+if (profile.preview) {
+  const { publicURL } = await getPublicUrl(profile.preview);
+  preview = publicURL ?? "";
+}
+---
+
+<Layout title={found ? name : "Not found"}>
+  <div class="bio">
+    <img src={preview} />
+    <h1>{name}</h1>
+    <Fragment set:html={html.join("")} />
+  </div>
+</Layout>
+
+<style lang="scss">
+  .bio {
+    text-align: center;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  }
+</style>
